@@ -20,7 +20,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-
     SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
     if(renderer == NULL) {
@@ -28,18 +27,30 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    while(!done) {
-        SDL_Event event;
+    SDL_FRect player = { 100.0f, 100.0f, 50.0f, 50.0f};
+    float speed = 200;
 
+    Uint64 last_time = SDL_GetPerformanceCounter();
+
+    while(!done) {
+        Uint64 current_time = SDL_GetPerformanceCounter();
+        
+        double delta_time = (double) ((current_time - last_time) / (double)SDL_GetPerformanceFrequency());
+        last_time = current_time;
+        player.x += speed * delta_time;
+
+        SDL_Event event;
         while(SDL_PollEvent(&event)) {
             if (event.type == SDL_EVENT_QUIT) {
                 done = true;
             }
         }
         SDL_SetRenderDrawColor(renderer, 20, 20, 50, 255);
-        
         SDL_RenderClear(renderer);
         
+        SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+        SDL_RenderFillRect(renderer, &player);
+
         SDL_RenderPresent(renderer);
     }
     SDL_DestroyRenderer(renderer);
