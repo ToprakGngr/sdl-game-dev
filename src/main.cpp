@@ -1,5 +1,13 @@
 #include <SDL3/SDL.h>
 #include <iostream>
+#include <cmath>
+
+struct Vector2
+{
+    float Length();
+    void Normalize();
+};
+
 
 int main(int argc, char* argv[]) {
 
