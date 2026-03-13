@@ -37,7 +37,21 @@ int main(int argc, char* argv[]) {
         
         double delta_time = (double) ((current_time - last_time) / (double)SDL_GetPerformanceFrequency());
         last_time = current_time;
-        player.x += speed * delta_time;
+        
+        const bool *keys = SDL_GetKeyboardState(NULL);
+
+        if(keys[SDL_SCANCODE_D]) {
+            player.x += speed * delta_time;
+        }
+        if(keys[SDL_SCANCODE_S]) {
+            player.y += speed * delta_time;
+        }
+        if(keys[SDL_SCANCODE_A]) {
+            player.x -= speed * delta_time;
+        }
+        if(keys[SDL_SCANCODE_W]) {
+            player.y -= speed * delta_time;
+        }
 
         SDL_Event event;
         while(SDL_PollEvent(&event)) {
